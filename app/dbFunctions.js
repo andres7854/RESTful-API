@@ -3,12 +3,9 @@ import mongoose from "mongoose";
 //CONNECTION TO DB
 mongoose.connect('mongodb://andres:password@mongodb_container:27017/miapp?authSource=admin');
 
-//MODEL OF USER
-const User = mongoose.model("User", new mongoose.Schema({
-    username: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-}))
+//IMPORTACION DE MODELOS
+import { User } from "./models";
+
 //FUNCTION TO CREATE AND SAVE A USER IN THE DB
 export async function createUser(username = String, email = String ,password = String) {
     const newUser = new User({username: username, email: email, password: password})
