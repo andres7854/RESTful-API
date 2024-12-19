@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 mongoose.connect('mongodb://andres:password@mongodb_container:27017/miapp?authSource=admin');
 
 //IMPORTACION DE MODELOS
-import { User } from "./models";
+import { User } from "./models.js";
 
 //FUNCTION TO CREATE AND SAVE A USER IN THE DB
 export async function createUser(username = String, email = String ,password = String) {

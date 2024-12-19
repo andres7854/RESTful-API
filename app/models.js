@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
  //USER MODEL
 export const User = mongoose.model('User', new mongoose.Schema({
