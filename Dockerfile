@@ -1,10 +1,12 @@
 FROM node:22.12.0
 
+RUN npm install -g pnpm
+
 WORKDIR /home/app
 
 COPY package.json ./
 
-RUN npm install
+RUN pnpm i
 
 COPY . .
 
