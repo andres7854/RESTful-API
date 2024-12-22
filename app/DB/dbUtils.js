@@ -18,12 +18,12 @@ import { User, Token, Task } from "./models.js";
         const newUserToken = new Token({email: email, token: tokenCreated});
         if (userToken === null) {
             await newUserToken.save();
-            return newUserToken.token;
+            return tokenCreated;
         } else {
             const validation = validateToken(userToken.token);
             if(validation === 'TokenExpired'){
-                await Token.findOneAndReplace({email: email}, newUserToken);
-                return newUserToken.token;
+                await Token.findOneAndUpdate({email: email}, {$set:{token: tokenCreated}});
+                return tokenCreated;
             }else{
                 return userToken.token;
             }
@@ -54,7 +54,8 @@ import { User, Token, Task } from "./models.js";
     //FUNCTION TO DELETE A USER
     export async function deleteUser(id = String) {
         try{
-            await User.findByIdAndDelete(id);
+            const userToDelete = await User.findByIdAndDelete(id);
+            await Token.findOneAndDelete({email: userToDelete.email});
             return 'usuario eliminado correctamente';
         }catch(err){
             return `usuario no encontrado error:${err.message}`;
