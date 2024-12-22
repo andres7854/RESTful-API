@@ -95,3 +95,21 @@ import { User, Token, Task } from "./models.js";
             return `tarea no eliminada error: ${err}`
         }
     }
+
+    export async function editTask(userId, taskId, taskTitle, taskDescription, taskStatus){
+        try {
+            await User.findOneAndUpdate(
+                {_id: userId, "tasks._id": taskId},
+                {
+                    $set:{
+                        "tasks.$.title": taskTitle,
+                        "tasks.$.description": taskDescription,
+                        "tasks.$.status": taskStatus
+                    }
+                }
+            );
+            return 'tarea editada correctamente'
+        } catch (err) {
+            return 'tarea o usuario no encontrados error: '+err;
+        }
+    }
