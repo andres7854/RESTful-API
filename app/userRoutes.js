@@ -31,10 +31,9 @@ export function setUsersRoutes() {
         const email = req.body.email;
         const password = req.body.password;
         const userValidation = await validateUser(email, password);
-        var token;
-        if (userValidation === 'usuario validado'){
-            token = await validateTokens(email);
-            res.send(token);
+        if (userValidation != 'contraseña incorrecta'){
+            const token = await validateTokens(email);
+            res.send({id: userValidation, token: token});
         }else{
             res.send(userValidation);
         }

@@ -1,5 +1,6 @@
 import express from 'express';
 import { setUsersRoutes } from './userRoutes.js';
+import { setTasksRoutes } from './tasksRoutes.js';
 
 export const app = express();
 const port = 3000;
@@ -12,8 +13,11 @@ app.get('/', async (req, res) => {
     res.send("hello world");
 })
 
-//ESTABLISHING USER ROUTES
+//SET UP THE USER ROUTES
 setUsersRoutes();
+
+//SET UP THE TASKS ROUTES
+setTasksRoutes();
 
 //APP DEPLOY
 app.listen(port, () => console.log(`aplicacion desplegada en el puerto ${port}`));

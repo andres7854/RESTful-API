@@ -20,8 +20,8 @@ export async function validateTokens(email = String) {
     } else {
         const validation = validateToken(userToken.token);
         if(validation === 'TokenExpired'){
-            await newUserToken.save();
-            return `previous token expired new token: ${newUserToken.token}`;
+            await Token.findOneAndReplace({email: email}, newUserToken);
+            return newUserToken.token;
         }else{
             return userToken.token;
         }
@@ -61,15 +61,15 @@ export async function validateUser(email = String, password = String) {
     } else {
         var bdPassword = user.password;
         if(password === bdPassword){
-            return 'usuario validado';
+            return user.id;
         }else{
             return 'contraseña incorrecta';
         }    
     }
 }
 //FUNCTION TO CREATE A TASK
-export async function createTask(title = String, description = String, user = String) {
-    const newTask = new Task({title: title, description: description, user: user});
-    await newTask.save();
+export async function createTask(title = String, description = String, status = Boolean, id = String) {
+    const newTask = new Task({title: title, description: description, status: status});
+    await User.findByIdAndUpdate(id, {$push: {tasks: newTask}});
     return newTask;
 }

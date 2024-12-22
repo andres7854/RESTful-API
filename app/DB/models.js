@@ -12,6 +12,20 @@ export const Token = mongoose.model('Token', new mongoose.Schema({
     }
 }));
 
+//TASK MODEL
+export const Task = mongoose.model('Task', new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+    },
+    status: {
+        type: Boolean
+    }
+}));
+
  //USER MODEL
 export const User = mongoose.model('User', new mongoose.Schema({
     username: {
@@ -27,24 +41,8 @@ export const User = mongoose.model('User', new mongoose.Schema({
         type: String,
         required: true
     },
-    tasks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Task'
-    }]
-}));
-
-//TASK MODEL
-export const Task = mongoose.model('Task', new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    user: {
-        type: String,
-        required: true
+    tasks: {
+        type: [Task.schema],
+        default: []
     }
 }));
