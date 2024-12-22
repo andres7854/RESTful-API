@@ -1,7 +1,7 @@
 import { app } from "./index.js";
 
 //IMPORT OF USER FUNCTIONS
-import { createTask, deleteTask, editTask } from './DB/dbUtils.js';
+import { createTask, deleteTask, editTask, listTasks } from './DB/dbUtils.js';
 
 export function setTasksRoutes(){
     //ROUTE TO CREATE A TASK
@@ -18,6 +18,7 @@ export function setTasksRoutes(){
         }
     });
 
+    //ROUTE TO DELETE A TASK
     app.delete('/deleteTask', async (req, res) => {
         const userId = req.body.userId;
         const taskId = req.body.taskId;
@@ -30,6 +31,7 @@ export function setTasksRoutes(){
 
     });
 
+    //ROUTE TO EDIT A TASK
     app.patch('/editTask', async (req, res) => {
         const userId = req.body.userId;
         const taskId = req.body.taskId;
@@ -41,6 +43,17 @@ export function setTasksRoutes(){
             res.status(201).send(editState);
         } catch (err) {
             res.status(400).send('error: '+err.message);
+        }
+    })
+
+    //ROUTE TO LIST ALL TASKS
+    app.get('/listTasks', async (req, res) => {
+        const userId = req.body.userId;
+        try {
+            const listOfTasks = await listTasks(userId);
+            res.status(201).send(listOfTasks);
+        } catch (err) {
+            res.status(400).send('no se pudieron listar las tareas error: '+err);
         }
     })
 };

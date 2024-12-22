@@ -96,6 +96,7 @@ import { User, Token, Task } from "./models.js";
         }
     }
 
+    //FUNCTION TO EDIT A TASK
     export async function editTask(userId, taskId, taskTitle, taskDescription, taskStatus){
         try {
             await User.findOneAndUpdate(
@@ -111,5 +112,15 @@ import { User, Token, Task } from "./models.js";
             return 'tarea editada correctamente'
         } catch (err) {
             return 'tarea o usuario no encontrados error: '+err;
+        }
+    }
+
+    //FUNCTION TO LIST ALL TASKS
+    export async function listTasks(userId) {
+        try {
+            const user = await User.findById(userId);
+            return user.tasks;
+        } catch (err) {
+            return err;
         }
     }
