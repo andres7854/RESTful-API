@@ -30,6 +30,12 @@ import { User, Token, Task } from "./models.js";
         }
     }
 
+    //FUNCTION TO VALIDATE A TOKEN
+    export async function validateTokenExpiration(token = String) {
+        const tokenValidation = validateToken(token);
+        return tokenValidation;
+    }
+
     //FUNCTION TO LIST ALL TOKENS
     export async function listTokens() {
         const tokens = await Token.find();
@@ -80,10 +86,21 @@ import { User, Token, Task } from "./models.js";
 //TASKS FUNCTIONS
 
     //FUNCTION TO CREATE A TASK
-    export async function createTask(title = String, description = String, status = Boolean, id = String) {
-        const newTask = new Task({title: title, description: description, status: status});
-        await User.findByIdAndUpdate(id, {$push: {tasks: newTask}});
-        return newTask;
+    export async function createTask(title = String, description = String, userId = String) {
+        if (!userId) {
+            throw new Error('id del usuario no proporcionado');
+        }
+        const newTask = new Task({title: title, description: description, status: false});
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                throw new Error('Usuario no encontrado');
+            }
+            await User.findByIdAndUpdate(userId, {$push: {tasks: newTask}});
+            return newTask;
+        } catch (err) {
+            throw new Error('tarea no creada error: '+err.message);
+        }
     }
 
     //FUNCTION TO DELETE A TASK

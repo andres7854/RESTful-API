@@ -21,7 +21,8 @@ export function validateToken(token = String) {
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
             return 'TokenExpired';
+        }else{
+            return error;
         }
-        return error;
     }
 }

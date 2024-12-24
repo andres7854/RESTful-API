@@ -8,13 +8,12 @@ export function setTasksRoutes(){
     app.post('/createTask', async (req, res) => {
         const title = req.body.title;
         const description = req.body.description;
-        const status = req.body.status;
-        const id = req.body.id;
+        const userId = req.body.userId;
         try{
-            const newTask = await createTask(title, description, status, id);
-            res.status(201).json(newTask);
+            await createTask(title, description, userId);
+            res.status(201).send('tarea creada exitosamente');
         }catch(err){
-            res.status(400).json({error: err.message});
+            res.status(400).json('tarea no creadada error: '+err.message);
         }
     });
 
@@ -47,7 +46,7 @@ export function setTasksRoutes(){
     })
 
     //ROUTE TO LIST ALL TASKS
-    app.get('/listTasks', async (req, res) => {
+    app.post('/listTasks', async (req, res) => {
         const userId = req.body.userId;
         try {
             const listOfTasks = await listTasks(userId);

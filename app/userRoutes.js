@@ -1,7 +1,7 @@
 import { app } from "./index.js"
 
 //IMPORT OF USER FUNCTIONS
-import { validateTokens, createUser, listUsers, deleteUser, validateUser, listTokens } from './DB/dbUtils.js';
+import { validateTokens, createUser, listUsers, deleteUser, validateUser, listTokens, validateTokenExpiration } from './DB/dbUtils.js';
 
 export function setUsersRoutes() {
     //LIST USERS ROUTE
@@ -16,9 +16,9 @@ export function setUsersRoutes() {
         const password = req.body.password;
         try{
             const newUser = await createUser(username, email, password);
-            res.status(201).json(newUser);
+            res.status(201).send('usuario creado exitosamente');
         }catch(err){
-            res.status(400).json({error: err.message});
+            res.status(400).json(`usuario no creado error: `+err.message);
         }
     })
     //DELETE USER ROUTE
@@ -31,9 +31,9 @@ export function setUsersRoutes() {
         const email = req.body.email;
         const password = req.body.password;
         const userValidation = await validateUser(email, password);
-        if (userValidation != 'contraseña incorrecta'){
+        if (userValidation != 'contraseña incorrecta' && userValidation != 'usuario no encontrado'){
             const token = await validateTokens(email);
-            res.send({id: userValidation, token: token});
+            res.send({id: userValidation, email: email, token: token});
         }else{
             res.send(userValidation);
         }
@@ -42,5 +42,12 @@ export function setUsersRoutes() {
     app.get('/listTokens', async (req, res) => {
         const tokens = await listTokens();
         res.send(tokens);
+    })
+
+    //FUNCTION TO VALIDATE A TOKEN
+    app.post('/validateTokenExpiration', async (req, res) => {
+        const token = req.body.token;
+        const tokenValidation = await validateTokenExpiration(token);
+        res.send(tokenValidation);
     })
 }
