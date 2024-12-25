@@ -15,13 +15,19 @@ jobs:
           sudo apt-get update 
           sudo apt-get install -y ssh
 
+        - name: Set up SSH private key
+          run: |
+            echo "${{ secrets.MY_PEM_KEY }}" > ~/.ssh/id_rsa
+          env:
+            MY_PEM_KEY: ${{ secrets.MY_PEM_KEY }}
+
       - name: Deploy to vm of azure
         env:
             SSH_PASS: ${{ secrets.MY_PEM_KEY }}
             SSH_USER: ${{ secrets.SSH_USER }}
             SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          sudo ssh -i $ SSH_PASS $SSH_USER@$SSH_HOST << 'EOF'
+          sudo ssh -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
             cd /appRepo/RESTful-API
             git pull origin main
             sudo docker compose up --build
