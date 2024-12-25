@@ -6,6 +6,8 @@ services:
       - "3000:3000"
     links:
       - mongodb_container
+    volumes:
+      - .:/home/app
 
   mongodb_container:
     image: mongo
