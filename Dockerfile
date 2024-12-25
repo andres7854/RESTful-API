@@ -1,12 +1,10 @@
 FROM node:22.12.0
 
-RUN npm install -g pnpm
-
 WORKDIR /home/app
 
-COPY package.json ./
+COPY package.json package-lock.json ./
 
-RUN pnpm i
+RUN npm install
 
 COPY . .
 
