@@ -15,11 +15,11 @@ jobs:
           sudo apt-get update 
           sudo apt-get install -y ssh
 
-        - name: Set up SSH private key
-          run: |
-            echo "${{ secrets.MY_PEM_KEY }}" > ~/.ssh/id_rsa
-          env:
-            MY_PEM_KEY: ${{ secrets.MY_PEM_KEY }}
+      - name: Set up SSH private key
+        run: |
+          echo "${{ secrets.MY_PEM_KEY }}" > ~/.ssh/id_rsa
+        env:
+          MY_PEM_KEY: ${{ secrets.MY_PEM_KEY }}
 
       - name: Deploy to vm of azure
         env:
