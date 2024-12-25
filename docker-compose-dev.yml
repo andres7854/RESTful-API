@@ -1,0 +1,26 @@
+services:
+
+  express_container:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "3000:3000"
+    links:
+      - mongodb_container
+    volumes:
+      - .:/home/app
+
+  mongodb_container:
+    image: mongo:latest
+    ports: 
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=andres
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    command: mongod --bind_ip_all --port 27017 --nounixsocket
+    volumes:
+      - mongo_volume:/data/db
+
+volumes:
+  mongo_volume:
