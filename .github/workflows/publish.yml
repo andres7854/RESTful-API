@@ -13,9 +13,24 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y openssh-client
 
+      - name: Set up SSH private key
+          run: |
+            echo "${{ secrets.MY_PEM_KEY }}" > ~/.ssh/id_rsa
+          env:
+            MY_PEM_KEY: ${{ secrets.MY_PEM_KEY }}
+   
+      - name: Set permissions for SSH private key
+          run: chmod 600 ~/.ssh/id_rsa
+
+      - name: Disable strict host key checking
+          run: |
+            echo "Host *" >> ~/.ssh/config
+            echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+            echo "  UserKnownHostsFile /dev/null" >> ~/.ssh/config
+
       - name: Deploy to vm of azure
-        run: 
-          sudo ssh -o "StrictHostKeyChecking=no" -i ${{ secrets.AUTH_SERVER }} << EOF
+        run: |
+          sudo ssh -o "StrictHostKeyChecking=no" -i ~/.ssh/id_rsa ${{ secrets.AUTH_SERVER }} << 'EOF'
             cd /appRepo/RESTful-API
             git pull origin main
             sudo docker compose up --build
