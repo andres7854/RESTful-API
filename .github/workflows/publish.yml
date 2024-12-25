@@ -17,6 +17,7 @@ jobs:
 
       - name: Set up SSH private key
         run: |
+          mkdir -p ~/.ssh
           echo "${{ secrets.MY_PEM_KEY }}" > ~/.ssh/id_rsa
         env:
           MY_PEM_KEY: ${{ secrets.MY_PEM_KEY }}
