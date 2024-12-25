@@ -11,11 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install sshpass
-        run: sudo apt-get update && sudo apt-get install -y openssh-client
+        run: sudo apt-get update && sudo apt-get install -y sshpass
 
       - name: Deploy to vm of azure
-        run:
-        ssh -o "StrictHostKeyChecking=no" -i 
+        run: 
           sudo sshpass -p ${{ secrets.MY_PEM_KEY }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << 'EOF'
             cd /appRepo/RESTful-API
             git pull origin main
