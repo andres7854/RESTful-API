@@ -1,6 +1,6 @@
 {
   "name": "first-backend-project",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "main": "./app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,7 @@
     "first-backend-project": "file:",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.1",
-    "pnpm": "^9.15.1"
+    "pnpm": "^9.15.1",
+    "url": "^0.11.4"
   }
 }
