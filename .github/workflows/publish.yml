@@ -28,7 +28,7 @@ jobs:
             SSH_USER: ${{ secrets.SSH_USER }}
             SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          sudo ssh -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
+          sudo ssh -t -o "StrictHostKeyChecking=no" -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
             cd /appRepo/RESTful-API
             git pull origin main
             sudo docker compose up --build
