@@ -15,7 +15,7 @@ jobs:
 
       - name: Deploy to vm of azure
         run: 
-          sshpass -p ${{ secrets.MY_PEM_KEY }} ssh -o StrictHostKeyChecking=no ${{secrets.AUTH_SERVER}} << EOF
+          sshpass -p ${{ secrets.MY_PEM_KEY }} ssh ${{secrets.AUTH_SERVER}} << EOF
             cd /appRepo/RESTful-API
             git pull origin main
             sudo docker compose up --build
