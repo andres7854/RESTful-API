@@ -19,6 +19,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.MY_PEM_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
         env:
           MY_PEM_KEY: ${{ secrets.MY_PEM_KEY }}
 
@@ -31,5 +32,5 @@ jobs:
           sudo ssh -t -o "StrictHostKeyChecking=no" -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
             cd appRepo/RESTful-API/
             git pull origin main
-            sudo docker compose up --build
+            sudo docker compose up -d --build
           EOF
