@@ -19,7 +19,7 @@ jobs:
             SSH_USER: ${{ secrets.SSH_USER }}
             SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
+          sudo sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
             cd /appRepo/RESTful-API
             git pull origin main
             sudo docker compose up --build
