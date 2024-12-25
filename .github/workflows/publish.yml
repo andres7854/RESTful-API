@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Install sshpass
         run: |
-          sudo apt-get update && sudo apt-get install -y sshpass
-          sudo apt-get install lftp
+          sudo apt-get update 
+          sudo apt-get install -y ssh
 
       - name: Deploy to vm of azure
         env:
@@ -21,7 +21,7 @@ jobs:
             SSH_USER: ${{ secrets.SSH_USER }}
             SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          sudo sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
+          sudo ssh -i $ SSH_PASS $SSH_USER@$SSH_HOST << 'EOF'
             cd /appRepo/RESTful-API
             git pull origin main
             sudo docker compose up --build
