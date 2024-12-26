@@ -6,7 +6,7 @@ async function signUp() {
         alert('Por favor complete todos los campos');
         return;
     }
-    const response = await fetch(`http://localhost:3000/createUser`, {
+    const response = await fetch(`/createUser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
