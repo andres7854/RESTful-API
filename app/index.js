@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
     res.sendFile(`${__dirname}/staticWeb/index.html`);
 })
 
-app.get('/login', async (req, res) => {
+app.get('/logIn', async (req, res) => {
     res.sendFile(`${__dirname}/staticWeb/logIn.html`);
 })
 
