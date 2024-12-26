@@ -10,7 +10,7 @@ async function createTask() {
         return;
     }
     try {
-        const response = await fetch('http://127.0.0.1:3000/createTask', {
+        const response = await fetch(`http://localhost:3000/createTask`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ document.getElementById('createTaskForm').addEventListener('submit', (e) => {
 });
 
 async function getTasks() {
-    const response = await fetch('http://127.0.0.1:3000/listTasks', {
+    const response = await fetch(`http://localhost:3000/listTasks`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ async function editTask(taskNumber, changeStatus) {
     if (changeStatus) {
         status = !status;
     }
-    const response = await fetch('http://127.0.0.1:3000/editTask', {
+    const response = await fetch(`http://localhost:3000/editTask`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ async function editTask(taskNumber, changeStatus) {
 
 async function deleteTask(taskNumber){
     const taskId = document.getElementById(`taskId${taskNumber}`).innerText;
-    const response = await fetch('http://127.0.0.1:3000/deleteTask', {
+    const response = await fetch(`http://localhost:3000/deleteTask`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
