@@ -11,7 +11,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // MIDDLEWARE TO ALLOW CROSS ORIGIN REQUESTS
-app.use(cors());
+app.use(cors({
+    origin: '*', // Permitir todas las solicitudes de origen
+}));
 // MIDDLEWARE TO PARSE THE BODY OF THE REQUESTS IN JSON FORMAT
 app.use(express.json());
 //MIDDLEWARE TO SERVE STATIC FILES
