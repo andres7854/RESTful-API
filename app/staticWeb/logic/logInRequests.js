@@ -5,7 +5,7 @@ async function logIn() {
         alert('Por favor complete todos los campos');
         return;
     }
-    const response = await fetch(`http://localhost:3000/validateUser`, {
+    const response = await fetch(`/validateUser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
