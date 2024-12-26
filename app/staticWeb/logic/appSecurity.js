@@ -7,7 +7,7 @@
         alert('Su sesión ha expirado. Por favor inicie sesión nuevamente.');
         window.location.href = './';
     }
-    const response = await fetch('http://127.0.0.1:3000/validateTokenExpiration', {
+    const response = await fetch(`http://localhost:3000/validateTokenExpiration`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
